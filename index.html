@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="robots" content="noindex,nofollow">
+<title>金陵旭项目 · 验收工具需求收集</title>
+<style>
+:root{--navy:#1F3864;--navy2:#2E5395;--orange:#C25E00;--bg:#EEF2F8;--card:#fff;--line:#D8E0EC;--ink:#222;--gray:#777;--ok:#2E7D32;--paper:#FBFAF6;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+html,body{margin:0;background:var(--bg);color:var(--ink);}
+.wrap{max-width:680px;margin:0 auto;padding:0 0 120px;}
+.hd{background:linear-gradient(135deg,#23406e,#1F3864);color:#fff;padding:20px 18px 18px;position:relative;}
+.hd h1{margin:0;font-size:20px;font-weight:800;letter-spacing:.5px;}
+.hd .sub{font-size:12.5px;opacity:.9;margin-top:6px;line-height:1.6;}
+.hd .ver{position:absolute;top:12px;right:14px;font-size:10px;opacity:.65;}
+.hd .refresh{display:inline-block;margin-top:10px;background:rgba(255,255,255,.16);color:#fff;border:none;font-size:12px;padding:6px 12px;border-radius:20px;font-weight:600;}
+.intro{background:#FFF8EC;border-left:4px solid var(--orange);margin:14px;padding:11px 13px;font-size:13px;line-height:1.7;color:#5a4630;border-radius:0 8px 8px 0;}
+.intro b{color:var(--orange);}
+.sec{background:var(--card);margin:14px;border-radius:14px;box-shadow:0 2px 8px rgba(31,56,100,.06);overflow:hidden;}
+.sec>.t{background:#F3F6FB;padding:13px 15px;font-size:15.5px;font-weight:800;color:var(--navy);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;}
+.sec>.t .n{background:var(--navy);color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto;}
+.sec>.bd{padding:6px 15px 16px;}
+.q{padding:13px 0 4px;border-top:1px dashed #E6ECF4;}
+.q:first-child{border-top:none;}
+.q .ql{font-size:14px;font-weight:700;color:#2a3142;margin-bottom:9px;line-height:1.55;}
+.q .ql .req{color:#C0392B;font-weight:700;}
+.q .hint{font-size:11.5px;color:var(--gray);font-weight:400;margin-top:3px;line-height:1.5;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{border:1.5px solid var(--line);background:#fff;color:#3a4252;border-radius:22px;padding:8px 14px;font-size:13px;font-weight:600;transition:.12s;user-select:none;}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+.chip.multi.on{background:var(--navy2);border-color:var(--navy2);}
+input.txt,textarea.txt,select.txt{width:100%;border:1.5px solid var(--line);border-radius:9px;padding:10px 11px;font-size:14px;background:#fff;color:var(--ink);margin-top:4px;}
+textarea.txt{min-height:62px;resize:vertical;line-height:1.6;}
+input.txt:focus,textarea.txt:focus,select.txt:focus{outline:none;border-color:var(--navy2);}
+.row2{display:flex;gap:10px;}.row2>div{flex:1;}
+.lbl-sm{font-size:11.5px;color:var(--gray);margin:8px 0 2px;}
+/* 验收项库 */
+.grp{margin:10px 0 4px;}
+.grp .gh{font-size:13px;font-weight:800;color:var(--orange);padding:7px 0 7px 2px;border-bottom:2px solid #F0E3D2;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.item{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid #F2F5F9;}
+.item .ck{width:21px;height:21px;border:1.5px solid #B9C4D6;border-radius:6px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;transition:.12s;}
+.item.on .ck{background:var(--navy2);border-color:var(--navy2);}
+.item .nm{flex:1;font-size:13.5px;color:#333;line-height:1.4;}
+.item .std{width:104px;flex:0 0 auto;}
+.item .std input{width:100%;border:1.5px solid var(--line);border-radius:7px;padding:6px 8px;font-size:12px;text-align:center;}
+.item.on .nm{font-weight:700;color:var(--navy);}
+.addrow{display:flex;gap:8px;margin-top:9px;}
+.addrow input{flex:1;}
+.addbtn{background:var(--orange);color:#fff;border:none;border-radius:9px;padding:0 15px;font-size:13px;font-weight:700;white-space:nowrap;}
+.custlist{margin-top:8px;}
+.custitem{display:flex;align-items:center;gap:8px;background:#FFF8EC;border:1px solid #F0E3D2;border-radius:8px;padding:8px 10px;margin-bottom:6px;font-size:13px;}
+.custitem .x{color:#C0392B;font-weight:700;font-size:16px;flex:0 0 auto;}
+.custitem .c{flex:1;}.custitem .c b{color:var(--orange);}
+/* 底部栏 */
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 14px;box-shadow:0 -3px 12px rgba(0,0,0,.06);z-index:50;}
+.bar .prog{font-size:11.5px;color:var(--gray);text-align:center;margin-bottom:7px;}
+.bar .btns{display:flex;gap:9px;max-width:680px;margin:0 auto;}
+.bar button{flex:1;border:none;border-radius:11px;padding:13px;font-size:14px;font-weight:800;}
+.bar .copy{background:#EAF0F8;color:var(--navy);}
+.bar .exp{background:var(--navy);color:#fff;}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(30,40,60,.94);color:#fff;padding:11px 20px;border-radius:24px;font-size:13.5px;z-index:99;opacity:0;transition:.25s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;}
+.foot{text-align:center;font-size:11px;color:#9aa6b8;padding:18px 20px 0;line-height:1.7;}
+</style></head>
+<body><div class="wrap">
+
+<div class="hd">
+  <div class="ver" id="verTag">v1.0</div>
+  <h1>金陵旭项目 · 验收工具需求收集</h1>
+  <div class="sub">南京河西招商 · 金陵旭　|　请项目经理填写<br>填完点底部「导出需求发段总」，我据此给你们定向开发专属验收工具</div>
+  <button class="refresh" onclick="location.reload()">🔄 刷新最新版</button>
+</div>
+
+<div class="intro">
+  这份表是帮我们搞清楚：<b>金陵旭到底要验收什么、用什么标准、有什么特殊情况</b>。<br>
+  大概 10–15 分钟。<b>带 ★ 的尽量填</b>；拿不准的可以留空、或写「用金茂府标准」「待定」。填的内容自动暂存在手机，关掉再开还在。
+</div>
+
+<!-- ============ Part 1 项目概况 ============ -->
+<div class="sec"><div class="t"><span class="n">1</span>项目概况</div><div class="bd">
+  <div class="q"><div class="ql">★ 项目全称</div>
+    <input class="txt" data-k="p_name" placeholder="南京河西招商 · 金陵旭" value="南京河西招商 · 金陵旭"></div>
+  <div class="q"><div class="ql">★ 填表人 / 职务</div>
+    <input class="txt" data-k="p_who" placeholder="如：张三 / 项目经理"></div>
+  <div class="q"><div class="ql">项目规模</div>
+    <div class="row2">
+      <div><div class="lbl-sm">楼栋数</div><input class="txt" data-k="p_build" placeholder="如 8 栋"></div>
+      <div><div class="lbl-sm">总户数</div><input class="txt" data-k="p_unit" placeholder="如 200 户"></div>
+      <div><div class="lbl-sm">户型种类</div><input class="txt" data-k="p_type" placeholder="如 5 种"></div>
+    </div></div>
+  <div class="q"><div class="ql">★ 当前 / 计划的验收阶段<span class="hint">（可多选）</span></div>
+    <div class="chips" data-multi="q_stage">
+      <div class="chip multi" data-v="材料进场">材料进场</div>
+      <div class="chip multi" data-v="安装过程中">安装过程中</div>
+      <div class="chip multi" data-v="安装完成自检">安装完成自检</div>
+      <div class="chip multi" data-v="竣工交付前">竣工交付前</div>
+      <div class="chip multi" data-v="交付后整改">交付后整改</div>
+    </div></div>
+  <div class="q"><div class="ql">★ 你们的验收节奏 / 周期</div>
+    <div class="hint">比如金茂府「整栋逐户查」，你们提到「5 层一验收」——具体是怎么个查法？多久一轮？</div>
+    <textarea class="txt" data-k="q_rhythm" placeholder="例：每盖完 5 层做一次集中验收，一栋楼分多轮……"></textarea></div>
+  <div class="q"><div class="ql">现场检查员几人、分别是谁</div>
+    <input class="txt" data-k="q_inspectors" placeholder="如：2 人，王__、李__"></div>
+</div></div>
+
+<!-- ============ Part 2 验收品类 ============ -->
+<div class="sec"><div class="t"><span class="n">2</span>验收哪些品类</div><div class="bd">
+  <div class="q"><div class="ql">★ 本项目要验收的品类<span class="hint">（多选；金盈泰常见品类已列出，没有的在最下面自己加）</span></div>
+    <div class="chips" data-multi="q_cat">
+      <div class="chip multi" data-v="不锈钢柜体">不锈钢柜体</div>
+      <div class="chip multi" data-v="木质/板式柜体">木质/板式柜体</div>
+      <div class="chip multi" data-v="台面(岩板)">台面(岩板)</div>
+      <div class="chip multi" data-v="台面(石英石/其他)">台面(石英石/其他)</div>
+      <div class="chip multi" data-v="门板">门板</div>
+      <div class="chip multi" data-v="木饰面/护墙板">木饰面/护墙板</div>
+      <div class="chip multi" data-v="收纳系统">收纳系统</div>
+      <div class="chip multi" data-v="五金配件">五金配件</div>
+      <div class="chip multi" data-v="地板/地砖">地板/地砖</div>
+      <div class="chip multi" data-v="吊顶">吊顶</div>
+      <div class="chip multi" data-v="卫浴洁具">卫浴洁具</div>
+      <div class="chip multi" data-v="厨房电器">厨房电器</div>
+      <div class="chip multi" data-v="玻璃/镜子">玻璃/镜子</div>
+      <div class="chip multi" data-v="灯具">灯具</div>
+    </div>
+    <div class="addrow"><input class="txt" id="catAdd" placeholder="其他品类，输入后点加"><button class="addbtn" onclick="addCust('cat')">＋加</button></div>
+    <div class="custlist" id="cat_list"></div></div>
+  <div class="q"><div class="ql">★ 各品类对应的供应商 / 责任方</div>
+    <div class="hint">缺陷查出来要路由给对应供应商整改（金茂府是 港泽=柜体、山东众擎=台面材料、古光友=台面安装）。把你们的列一下，越全越好。</div>
+    <textarea class="txt" data-k="q_suppliers" placeholder="例：&#10;柜体 → __公司&#10;台面 → __公司&#10;门板 → __公司&#10;安装 → __班组"></textarea></div>
+</div></div>
+
+<!-- ============ Part 3 验收标准（核心） ============ -->
+<div class="sec"><div class="t"><span class="n">3</span>验收标准（最关键）</div><div class="bd">
+  <div class="intro" style="margin:6px 0 4px;">这部分最重要 👉 <b>你们要查哪些项、每项的合格标准是什么。</b>下面是金茂府+常见的「标准验收项库」，<b>勾选你们也要查的</b>，标准值能填就填（拿不准留空、我们给建议）。下面还能加你们项目特有的「非标项」。</div>
+
+  <div id="itemLib"></div>
+
+  <div class="q"><div class="ql">★ 非标 / 特殊验收项<span class="hint">（你们金陵旭特有的、上面没列到、但一定要查的项 + 标准）</span></div>
+    <div class="addrow"><input class="txt" id="spAdd" placeholder="如：玄关镜柜感应灯是否正常"><button class="addbtn" onclick="addCust('sp')">＋加</button></div>
+    <div class="hint" style="margin-top:6px;">加完可以在下面继续补充每条的标准。这是我们给你们「定制」的关键，越多越好。</div>
+    <div class="custlist" id="sp_list"></div></div>
+
+  <div class="q"><div class="ql">验收标准的依据 / 出处</div>
+    <div class="hint">你们的标准是按甲方合同、国标、还是项目自定？有没有书面标准文件？</div>
+    <textarea class="txt" data-k="q_stdsrc" placeholder="例：按招商甲方交付标准 + 我们内部标准，文件有/没有……"></textarea></div>
+</div></div>
+
+<!-- ============ Part 4 判定与处置 ============ -->
+<div class="sec"><div class="t"><span class="n">4</span>判定与处置</div><div class="bd">
+  <div class="q"><div class="ql">★ 缺陷分几档判定</div>
+    <div class="chips" data-single="q_grade">
+      <div class="chip" data-v="沿用金茂府三档">沿用金茂府三档<br><span style="font-size:10px;opacity:.7">①轻微/②严重/③不可交付</span></div>
+      <div class="chip" data-v="两档">两档(合格/不合格)</div>
+      <div class="chip" data-v="其他">其他(下面写)</div>
+    </div></div>
+  <div class="q"><div class="ql">各档怎么处置</div>
+    <div class="hint">金茂府：①轻微=现场修补　②严重=返工　③不可交付=换件/返厂。你们要改吗？</div>
+    <textarea class="txt" data-k="q_dispose" placeholder="沿用 / 或写你们的处置规则……"></textarea></div>
+</div></div>
+
+<!-- ============ Part 5 现场作业方式 ============ -->
+<div class="sec"><div class="t"><span class="n">5</span>现场作业方式</div><div class="bd">
+  <div class="q"><div class="ql">★ 多个检查员怎么分工</div>
+    <div class="chips" data-single="q_split">
+      <div class="chip" data-v="按楼栋分">按楼栋分</div>
+      <div class="chip" data-v="按楼层分">按楼层分</div>
+      <div class="chip" data-v="按品类分">按品类分</div>
+      <div class="chip" data-v="其他">其他</div>
+    </div></div>
+  <div class="q"><div class="ql">★ 房号 / 区域 怎么编号（防串户）</div>
+    <div class="hint">金茂府用「楼栋+户号」当唯一身份，照片才不会串户。你们的编号规则是？</div>
+    <input class="txt" data-k="q_keyrule" placeholder="如：栋号-单元-户号，例 3 栋 1单元 1602"></div>
+  <div class="q"><div class="ql">★ 需要哪些拍照 / 记录功能<span class="hint">（多选，金茂府都有，按需要勾）</span></div>
+    <div class="chips" data-multi="q_photo">
+      <div class="chip multi" data-v="拍照存证">拍照存证</div>
+      <div class="chip multi" data-v="照片自动水印">照片自动水印<br><span style="font-size:10px;opacity:.7">项目+房号+时间+检查人</span></div>
+      <div class="chip multi" data-v="手指圈注缺陷位置">手指圈注缺陷位置</div>
+      <div class="chip multi" data-v="离线可用">离线可用<br><span style="font-size:10px;opacity:.7">工地没信号也能录</span></div>
+      <div class="chip multi" data-v="录音转文字">语音转文字</div>
+    </div></div>
+  <div class="q"><div class="ql">一户大概查几项、拍几张照片</div>
+    <input class="txt" data-k="q_perunit" placeholder="如：一户约 10 项缺陷、拍 8-10 张"></div>
+</div></div>
+
+<!-- ============ Part 6 整改闭环 ============ -->
+<div class="sec"><div class="t"><span class="n">6</span>整改闭环</div><div class="bd">
+  <div class="q"><div class="ql">★ 要不要给供应商「整改回填」链接<span class="hint">（供应商修完拍照回传，你们验收销项）</span></div>
+    <div class="chips" data-single="q_backfill">
+      <div class="chip" data-v="要">要</div><div class="chip" data-v="暂不要">暂不要</div><div class="chip" data-v="不确定">不确定</div>
+    </div></div>
+  <div class="q"><div class="ql">★ 验收销项权在谁<span class="hint">（谁说了算这户算修好了）</span></div>
+    <input class="txt" data-k="q_signoff" placeholder="如：项目经理内部验收，供应商不能自证"></div>
+  <div class="q"><div class="ql">要不要这些产出<span class="hint">（多选）</span></div>
+    <div class="chips" data-multi="q_outputs">
+      <div class="chip multi" data-v="内部汇总总表/看板">内部汇总总表/看板</div>
+      <div class="chip multi" data-v="整改方案文档">整改方案文档</div>
+      <div class="chip multi" data-v="供应商派工单">供应商派工单</div>
+      <div class="chip multi" data-v="导出Excel/CSV">导出Excel/CSV</div>
+    </div></div>
+</div></div>
+
+<!-- ============ Part 7 特殊需求 ============ -->
+<div class="sec"><div class="t"><span class="n">7</span>特殊需求 & 自由填写</div><div class="bd">
+  <div class="q"><div class="ql">你们项目验收最大的痛点是什么</div>
+    <textarea class="txt" data-k="q_pain" placeholder="如：人多看不到对方拍的、标准不统一、找供应商扯皮……"></textarea></div>
+  <div class="q"><div class="ql">最希望这个工具帮你们解决什么</div>
+    <textarea class="txt" data-k="q_want" placeholder="一句话说清最想要的……"></textarea></div>
+  <div class="q"><div class="ql">还有什么要补充的</div>
+    <textarea class="txt" data-k="q_more" placeholder="任何想到的都可以写……"></textarea></div>
+</div></div>
+
+<div class="foot">填好后点下方「导出需求发段总」→ 选微信发给段总即可。<br>金盈泰数字 · 内部需求收集 · 仅你们与段总可见</div>
+</div>
+
+<div class="bar">
+  <div class="prog" id="prog">已填 0 项</div>
+  <div class="btns">
+    <button class="copy" onclick="copySummary()">📋 复制摘要</button>
+    <button class="exp" onclick="exportReport()">💾 导出需求发段总</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BUILD="v1.0 (2026-06-13)";
+document.getElementById('verTag').textContent=BUILD.split(' ')[0];
+const KEY="jlx_req_v1";
+
+/* ====== 验收项库（标准选项·基于金茂府缺陷码扩展到定制家居全品类） ====== */
+const LIB={
+"柜体 · 通用（不锈钢/木质都适用）":[
+  ["垂直度超差","≤2mm"],["平行度/方正度",""],["柜体整体变形",""],["柜门/抽屉开合顺畅",""],
+  ["门缝/对缝均匀","2-3mm"],["划痕/磕碰/压痕",""],["色差",""],["五金牢固(铰链/滑轨/拉手)",""],
+  ["层板/挂衣杆挠度","≤3mm"],["封边/背板完整",""]
+],
+"不锈钢柜体 · 专项":[
+  ["焊点外露/毛刺/虚焊",""],["阳角/冷角刮手",""],["圆弧与直面接合/错台",""],
+  ["编织网错位/不平",""],["违规打胶遮缺陷",""],["顶板S型波浪变形",""]
+],
+"台面（岩板/石英石）":[
+  ["拼接缝高低差","≤0.2mm"],["台面平整度",""],["崩边/崩瓷",""],["空鼓/垫板未满铺",""],
+  ["收口/打胶平顺",""],["下挂高度一致",""],["开孔(水盆/灶)尺寸位置",""],["色差/纹理对接",""]
+],
+"门板 / 木饰面":[
+  ["变形/翘曲",""],["起鼓(亚克力/UV/吸塑)",""],["色差/光泽不一",""],["封边/收口",""],
+  ["门缝均匀",""],["表面划痕/脏污",""],["拼花/对纹",""]
+],
+"通用 / 交付":[
+  ["尺寸符合下单图",""],["安装位置准确",""],["成品保护到位",""],["清洁度",""],
+  ["标识/标签齐全",""],["缝隙打胶收口",""],["与水电点位对接",""]
+]
+};
+
+const S=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||blank()}catch(e){return blank()}}
+function blank(){return{vals:{},multi:{},single:{},items:{},itemStd:{},cust:{cat:[],sp:[]}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S));updProg()}
+
+/* 渲染验收项库 */
+function renderLib(){
+  let h="";
+  for(const grp in LIB){
+    h+=`<div class="grp"><div class="gh">▸ ${grp}</div>`;
+    LIB[grp].forEach((it,i)=>{
+      const id=grp+"|"+it[0];
+      const on=S.items[id]?"on":"";
+      const stdv=S.itemStd[id]!=null?S.itemStd[id]:"";
+      h+=`<div class="item ${on}" data-id="${esc(id)}" onclick="tgItem(this)">
+        <div class="ck">${on?"✓":""}</div>
+        <div class="nm">${it[0]}</div>
+        <div class="std"><input placeholder="${it[1]||'标准'}" value="${esc(stdv)}" onclick="event.stopPropagation()" oninput="setStd('${esc(id)}',this.value)"></div>
+      </div>`;
+    });
+    h+=`</div>`;
+  }
+  document.getElementById('itemLib').innerHTML=h;
+}
+function esc(s){return String(s==null?"":s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function tgItem(el){const id=el.dataset.id;S.items[id]=!S.items[id];el.classList.toggle('on',S.items[id]);el.querySelector('.ck').textContent=S.items[id]?"✓":"";save();}
+function setStd(id,v){S.itemStd[id]=v;save();}
+
+/* chips（单选/多选） */
+function bindChips(){
+  document.querySelectorAll('[data-multi]').forEach(box=>{
+    const k=box.dataset.multi; S.multi[k]=S.multi[k]||[];
+    box.querySelectorAll('.chip').forEach(c=>{
+      if(S.multi[k].includes(c.dataset.v))c.classList.add('on');
+      c.onclick=()=>{const v=c.dataset.v,a=S.multi[k];const i=a.indexOf(v);
+        if(i<0){a.push(v);c.classList.add('on')}else{a.splice(i,1);c.classList.remove('on')}save();};
+    });
+  });
+  document.querySelectorAll('[data-single]').forEach(box=>{
+    const k=box.dataset.single;
+    box.querySelectorAll('.chip').forEach(c=>{
+      if(S.single[k]===c.dataset.v)c.classList.add('on');
+      c.onclick=()=>{box.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+        c.classList.add('on');S.single[k]=c.dataset.v;save();};
+    });
+  });
+}
+/* 文本框 */
+function bindInputs(){
+  document.querySelectorAll('[data-k]').forEach(el=>{
+    const k=el.dataset.k;
+    if(S.vals[k]!=null)el.value=S.vals[k];
+    else if(el.value)S.vals[k]=el.value;
+    el.addEventListener('input',()=>{S.vals[k]=el.value;save();});
+  });
+}
+/* 自填项（品类/非标） */
+function addCust(type){
+  const inp=document.getElementById(type==='cat'?'catAdd':'spAdd');
+  const v=(inp.value||'').trim(); if(!v)return;
+  S.cust[type].push({t:v,std:''}); inp.value=''; save(); renderCust(type);
+}
+function renderCust(type){
+  const box=document.getElementById(type+'_list');
+  box.innerHTML=S.cust[type].map((o,i)=>`<div class="custitem">
+    <span class="x" onclick="delCust('${type}',${i})">✕</span>
+    <div class="c"><b>${esc(o.t)}</b>${type==='sp'?`<input class="txt" style="margin-top:5px;font-size:12px;padding:6px 8px" placeholder="这项的合格标准（选填）" value="${esc(o.std)}" oninput="custStd('${type}',${i},this.value)">`:''}</div>
+  </div>`).join('');
+}
+function delCust(type,i){S.cust[type].splice(i,1);save();renderCust(type);}
+function custStd(type,i,v){S.cust[type][i].std=v;save();}
+
+/* 进度 */
+function updProg(){
+  let n=0;
+  n+=Object.values(S.vals).filter(v=>(v||'').trim()).length;
+  n+=Object.values(S.multi).reduce((s,a)=>s+(a&&a.length?1:0),0);
+  n+=Object.keys(S.single).length;
+  n+=Object.values(S.items).filter(Boolean).length;
+  n+=S.cust.cat.length+S.cust.sp.length;
+  document.getElementById('prog').textContent="已填 "+n+" 项 · 自动暂存中";
+}
+
+/* ====== 导出 ====== */
+function buildSummary(){
+  const L=[]; const P=(t)=>L.push(t);
+  P("【金陵旭项目 · 验收工具需求】");
+  P("项目："+(S.vals.p_name||'-')+"　填表人："+(S.vals.p_who||'-'));
+  P("规模："+(S.vals.p_build||'?')+"栋/"+(S.vals.p_unit||'?')+"户/"+(S.vals.p_type||'?')+"种户型");
+  P("验收阶段："+((S.multi.q_stage||[]).join('、')||'-'));
+  P("验收节奏："+(S.vals.q_rhythm||'-'));
+  P("检查员："+(S.vals.q_inspectors||'-'));
+  P("");
+  P("〔验收品类〕"+((S.multi.q_cat||[]).concat(S.cust.cat.map(o=>o.t)).join('、')||'-'));
+  P("供应商/责任方："+(S.vals.q_suppliers||'-'));
+  P("");
+  P("〔验收标准·勾选的标准项〕");
+  let any=false;
+  for(const grp in LIB){
+    const sel=LIB[grp].filter(it=>S.items[grp+"|"+it[0]]);
+    if(sel.length){any=true;P(" ["+grp+"]");
+      sel.forEach(it=>{const std=S.itemStd[grp+"|"+it[0]];P("  ·"+it[0]+(std?("｜标准:"+std):(it[1]?("｜参考:"+it[1]):"")));});
+    }
+  }
+  if(!any)P("  (未勾选)");
+  if(S.cust.sp.length){P(" [非标/特殊项]");S.cust.sp.forEach(o=>P("  ·"+o.t+(o.std?("｜标准:"+o.std):"")));}
+  P("标准依据："+(S.vals.q_stdsrc||'-'));
+  P("");
+  P("〔判定〕"+(S.single.q_grade||'-')+"　处置："+(S.vals.q_dispose||'-'));
+  P("〔现场〕分工:"+(S.single.q_split||'-')+"　房号规则:"+(S.vals.q_keyrule||'-'));
+  P("  拍照功能："+((S.multi.q_photo||[]).join('、')||'-'));
+  P("  每户量："+(S.vals.q_perunit||'-'));
+  P("〔闭环〕回填端:"+(S.single.q_backfill||'-')+"　销项权:"+(S.vals.q_signoff||'-'));
+  P("  要的产出："+((S.multi.q_outputs||[]).join('、')||'-'));
+  P("");
+  P("〔痛点〕"+(S.vals.q_pain||'-'));
+  P("〔期望〕"+(S.vals.q_want||'-'));
+  P("〔补充〕"+(S.vals.q_more||'-'));
+  return L.join("\n");
+}
+function copySummary(){
+  const t=buildSummary();
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>toast("已复制，去微信粘贴发段总"),()=>fallbackCopy(t));}
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast("已复制")}catch(e){toast("复制失败，请用导出")}document.body.removeChild(ta);}
+function exportReport(){
+  const sum=buildSummary();
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>金陵旭验收需求_${(S.vals.p_who||'').replace(/[^\\w\\u4e00-\\u9fa5]/g,'')}</title>
+<style>body{font-family:-apple-system,"PingFang SC",sans-serif;max-width:720px;margin:0 auto;padding:24px;color:#222;line-height:1.7}h1{color:#1F3864;font-size:20px;border-bottom:3px solid #C25E00;padding-bottom:8px}pre{white-space:pre-wrap;word-wrap:break-word;font-family:inherit;font-size:14px;background:#F7F9FC;padding:16px;border-radius:10px;border:1px solid #E0E6F0}</style></head>
+<body><h1>金陵旭项目 · 验收工具需求收集</h1><pre>${esc(sum)}</pre>
+<p style="color:#999;font-size:12px;text-align:center;margin-top:20px">金盈泰数字 · ${BUILD}</p></body></html>`;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`金陵旭验收需求_${(S.vals.p_who||'项目经理')}_2026-06-13.html`;
+  document.body.appendChild(a);a.click();setTimeout(()=>document.body.removeChild(a),600);
+  toast("已导出，请微信发给段总");
+}
+let _tt;
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* init */
+renderLib();bindChips();bindInputs();renderCust('cat');renderCust('sp');updProg();
+</script>
+</body></html>
